@@ -1,4 +1,8 @@
-
+/**
+ * 
+ * @author Matthew Payne
+ *
+ */
 public class Main {
 
 	public static void main(String[] args) {
