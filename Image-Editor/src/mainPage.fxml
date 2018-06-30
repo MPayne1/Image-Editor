@@ -7,7 +7,6 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
 <BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainPageController">
    <top>
       <MenuBar fx:id="menuBar" BorderPane.alignment="CENTER">
@@ -50,7 +49,7 @@
                   <Insets bottom="15.0" left="15.0" right="15.0" />
                </VBox.margin>
             </ColorPicker>
-            <Slider fx:id="sizeSlider" blockIncrement="5.0" majorTickUnit="5.0" max="25.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" snapToTicks="true">
+            <Slider fx:id="sizeSlider" blockIncrement="5.0" majorTickUnit="5.0" max="25.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="5.0">
                <VBox.margin>
                   <Insets left="15.0" right="15.0" top="15.0" />
                </VBox.margin>
@@ -64,7 +63,7 @@
       </VBox>
    </left>
    <center>
-      <Canvas fx:id="canvas" height="1049.0" width="1670.0" BorderPane.alignment="CENTER">
+      <Canvas fx:id="canvasMain" height="1049.0" width="1670.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets />
          </BorderPane.margin>
