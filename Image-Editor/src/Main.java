@@ -12,17 +12,13 @@ import javafx.stage.Stage;
  *
  */
 public class Main extends Application {
-
 	@Override
 	public void start(Stage primaryStage) throws IOException {
-		// sets the root to the log in page.
-		Parent root = FXMLLoader.load(getClass().getResource("Main page.fxml"));
-		// creates the log in page scene.
-		Scene scene = new Scene(root);
-		// sets and displays the scene to the user.
+		Parent mainBorderPane = FXMLLoader.load(getClass().getResource("mainPage.fxml"));
+		Scene scene = new Scene(mainBorderPane);
 		primaryStage.setScene(scene);
+		primaryStage.setTitle("Image Editor");
 		primaryStage.show();
-	
 	}
 
 	/**
