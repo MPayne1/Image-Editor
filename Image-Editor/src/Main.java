@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws IOException {
-		Parent mainBorderPane = FXMLLoader.load(getClass().getResource("mainPage.fxml"));
+		Parent mainBorderPane = FXMLLoader.load(getClass().getClassLoader().getResource("mainPage.fxml"));
 		Scene scene = new Scene(mainBorderPane);
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Image Editor");
