@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainPageController">
+   <top>
+      <MenuBar fx:id="menuBar" BorderPane.alignment="CENTER">
+        <menus>
+          <Menu fx:id="fileMenu" mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem fx:id="openMenuItem" mnemonicParsing="false" text="Open" />
+                  <MenuItem fx:id="saveAsMenuItem" mnemonicParsing="false" text="Save As.." />
+            </items>
+          </Menu>
+          <Menu fx:id="editMenu" mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem fx:id="insertImageMenuItem" mnemonicParsing="false" text="Insert Image" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <left>
+      <VBox fx:id="vBox" prefHeight="1048.0" prefWidth="254.0" style="-fx-background-color: #c9ced6;" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="straightLineBtn" mnemonicParsing="false" prefHeight="31.0" prefWidth="241.0" text="Straight Line" textAlignment="CENTER">
+               <VBox.margin>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="freeLineBtn" mnemonicParsing="false" prefHeight="39.0" prefWidth="231.0" text="Free Line">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="15.0" left="15.0" right="15.0" />
+               </VBox.margin>
+            </Button>
+            <ColorPicker fx:id="colourPicker" prefHeight="31.0" prefWidth="224.0" promptText="Choose Colour">
+               <VBox.margin>
+                  <Insets bottom="15.0" left="15.0" right="15.0" />
+               </VBox.margin>
+            </ColorPicker>
+            <Slider fx:id="sizeSlider" blockIncrement="5.0" majorTickUnit="5.0" max="25.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" snapToTicks="true">
+               <VBox.margin>
+                  <Insets left="15.0" right="15.0" top="15.0" />
+               </VBox.margin>
+            </Slider>
+            <Label fx:id="sizeLabel" prefHeight="21.0" prefWidth="239.0" style="-fx-alignment: center;" text="Brush Size" textAlignment="CENTER">
+               <VBox.margin>
+                  <Insets bottom="15.0" left="15.0" right="15.0" />
+               </VBox.margin>
+            </Label>
+         </children>
+      </VBox>
+   </left>
+</BorderPane>
