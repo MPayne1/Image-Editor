@@ -7,6 +7,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Slider;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
 /**
@@ -71,11 +72,34 @@ public class mainPageController {
 		});
 		
 		
+		//straight line event handler
+		this.straightLineBtn.setOnAction(btn -> {
+			this.canvasMain.setOnMousePressed(press -> {
+				this.fromX = press.getX();
+				this.fromY = press.getY();
+			});
+			this.canvasMain.setOnMouseDragged(drag -> {
+			});
+			this.canvasMain.setOnMouseReleased(event -> {
+				handleStraightLineBtn(event);
+			});
+
+		});
 		
 	}
 	
-	private void handleStraightLineBtn() {
-		
+	/**
+	 * Draw a straight line
+	 */
+	private void handleStraightLineBtn(MouseEvent to) {
+		GraphicsContext gc = canvasMain.getGraphicsContext2D();
+		gc.setStroke(colourPicker.getValue());
+		gc.setLineWidth(this.strokeSize);
+
+		this.toX = to.getX();
+		this.toY = to.getY();
+
+		gc.strokeLine(this.fromX, this.fromY, this.toX, this.toY);
 	}
 	
 	/**
