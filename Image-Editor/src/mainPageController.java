@@ -1,27 +1,35 @@
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 
 import javax.imageio.ImageIO;
 
+import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Slider;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.stage.Window;
+import javafx.stage.WindowEvent;
 
 /**
  * 
@@ -55,6 +63,8 @@ public class mainPageController {
 	ColorPicker colourPicker;
 	@FXML
 	Button eraserBtn;
+	@FXML private BorderPane bPane;
+	
 	
 	private double fromX;
 	private double fromY;
@@ -126,6 +136,8 @@ public class mainPageController {
 			this.canvasMain.setOnMouseReleased(release -> {
 			});
 		});
+		
+		
 	}
 	
 	/**
@@ -184,5 +196,6 @@ public class mainPageController {
 			ImageIO.write(renderedImage, "png", file);
 		}
 	}
+	
 	
 }
