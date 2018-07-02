@@ -19,6 +19,7 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 
@@ -52,7 +53,8 @@ public class mainPageController {
 	Slider sizeSlider;
 	@FXML 
 	ColorPicker colourPicker;
-	
+	@FXML
+	Button eraserBtn;
 	
 	private double fromX;
 	private double fromY;
@@ -99,13 +101,30 @@ public class mainPageController {
 
 		});
 		
+		// saveAs btn event handler
 		this.saveAsMenuItem.setOnAction(save -> {
 			try {
 				handleSaveAs();
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+		});
+		
+		// eraser btn event handler
+		this.eraserBtn.setOnAction(erase -> {
+			this.colourPicker.setValue(Color.WHITE);
+
+			this.canvasMain.setOnMousePressed(press -> {
+				this.fromX = press.getX();
+				this.fromY = press.getY();
+			});
+			this.canvasMain.setOnMouseDragged(drag -> {
+				this.fromX = drag.getX();
+				this.fromY = drag.getY();
+				handleFreeLineBtn();
+			});
+			this.canvasMain.setOnMouseReleased(release -> {
+			});
 		});
 	}
 	
@@ -116,10 +135,8 @@ public class mainPageController {
 		GraphicsContext gc = canvasMain.getGraphicsContext2D();
 		gc.setStroke(colourPicker.getValue());
 		gc.setLineWidth(this.strokeSize);
-
 		this.toX = to.getX();
 		this.toY = to.getY();
-
 		gc.strokeLine(this.fromX, this.fromY, this.toX, this.toY);
 	}
 	
@@ -130,11 +147,11 @@ public class mainPageController {
 		GraphicsContext gc = this.canvasMain.getGraphicsContext2D();
 		gc.setStroke(this.colourPicker.getValue());
 		gc.setFill(this.colourPicker.getValue());
-		if (this.strokeSize < 3) {
-			gc.fillOval(this.fromX, this.fromY, this.strokeSize + 2, this.strokeSize + 2);
-		} else {
+		//if (this.strokeSize < 3) {
+			//gc.fillOval(this.fromX, this.fromY, this.strokeSize + 2, this.strokeSize + 2);
+		//} else {
 			gc.fillOval(this.fromX, this.fromY, this.strokeSize, this.strokeSize);
-		}
+		//}
 
 	}
 	

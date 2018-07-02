@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.canvas.*?>
@@ -59,6 +60,14 @@
                   <Insets bottom="15.0" left="15.0" right="15.0" />
                </VBox.margin>
             </Label>
+            <Button fx:id="eraserBtn" mnemonicParsing="false" prefHeight="39.0" prefWidth="231.0" text="Eraser">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="15.0" left="15.0" right="15.0" />
+               </VBox.margin>
+            </Button>
          </children>
       </VBox>
    </left>
