@@ -1,4 +1,12 @@
+import java.awt.image.RenderedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
@@ -7,8 +15,12 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Slider;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.Window;
 
 /**
  * 
@@ -25,7 +37,7 @@ public class mainPageController {
 	@FXML 
 	Button straightLineBtn;
 	@FXML 
-	MenuItem saveAsFile;
+	MenuItem saveAsMenuItem;
 	@FXML 
 	MenuItem newFile;
 	@FXML 
@@ -41,12 +53,13 @@ public class mainPageController {
 	@FXML 
 	ColorPicker colourPicker;
 	
+	
 	private double fromX;
 	private double fromY;
 	private double toX;
 	private double toY;
 	private double strokeSize;
-	
+	private WritableImage image;
 	
 	public void initialize() {
 		
@@ -86,6 +99,14 @@ public class mainPageController {
 
 		});
 		
+		this.saveAsMenuItem.setOnAction(save -> {
+			try {
+				handleSaveAs();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
 	}
 	
 	/**
@@ -124,5 +145,27 @@ public class mainPageController {
 		this.strokeSize = this.sizeSlider.getValue();
 	}
 	
+	/**
+	 * Handle saveAs btn
+	 * @throws IOException 
+	 */
+	private void handleSaveAs() throws IOException {
+		// Capture what's on the canvas.
+		SnapshotParameters spa = new SnapshotParameters();
+		this.image = this.canvasMain.snapshot(spa, this.image);
+
+		FileChooser fileChooser = new FileChooser();
+
+		// Save to a file and set the image path.
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("png files (*.png)", "*.png");
+		fileChooser.getExtensionFilters().add(extFilter);
+
+		File file = fileChooser.showSaveDialog(null);
+
+		if (file != null) {
+			RenderedImage renderedImage = SwingFXUtils.fromFXImage(this.image, null);
+			ImageIO.write(renderedImage, "png", file);
+		}
+	}
 	
 }
