@@ -216,26 +216,27 @@ public class mainPageController {
 		BufferedImage buffImg = null;
 		Image img = null;
 		FileChooser fileChooser = new FileChooser();
-		Double imgHeight  = this.canvasMain.getHeight();
-		Double imgWidth = this.canvasMain.getWidth();
-		
+		Double imgHeightD  = this.canvasMain.getHeight();
+		Double imgWidthD = this.canvasMain.getWidth();
+		int imgHeight = imgHeightD.intValue();
+		int imgWidth = imgWidthD.intValue();
 
 		FileChooser.ExtensionFilter justJPG = new FileChooser.ExtensionFilter("JPG files (*.JPG)", "*.JPG", "*.jpg");
 		FileChooser.ExtensionFilter justPNG = new FileChooser.ExtensionFilter("PNG files (*.PNG)", "*.PNG", "*.png");
 		fileChooser.getExtensionFilters().addAll(justJPG, justPNG);
 
 		File file = fileChooser.showOpenDialog(null);
-
 		try {
 			 buffImg = ImageIO.read(file);
-			 buffImg.getScaledInstance(imgHeight.intValue(), imgWidth.intValue(), 0);
-			img = SwingFXUtils.toFXImage(buffImg, null);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
-		//return ("file:///" + file.getAbsolutePath());
-		
-		
+		// Scale the image to canvas size.
+		java.awt.Image scaledImg  = buffImg.getScaledInstance(imgWidth, imgHeight, 0);
+		BufferedImage buffScaleImg = new BufferedImage(imgWidth, imgHeight, 2 ); // 2 is image type TYPE_INT_ARGB
+		buffScaleImg.getGraphics().drawImage(scaledImg, 0, 0, null);
+		img = SwingFXUtils.toFXImage(buffScaleImg, null);
+			
 		this.canvasMain.getGraphicsContext2D().drawImage(img, 0, 0);
 	}
 	
