@@ -52,8 +52,8 @@ public class Main extends Application {
 	private void handleWindowClose(WindowEvent event) {
 		 Alert alert = new Alert(AlertType.CONFIRMATION);
 	    	alert.setTitle("Exit without saving?");
-	    	alert.setHeaderText("Do you want to exit without saving");
-	    	alert.setContentText("Are you ok with this?");
+	    	alert.setHeaderText("Do you want to exit without saving?");
+	    	alert.setContentText("Are you sure?");
 	    	
 	    	ButtonType cancel = new ButtonType("Cancel");
 	    	ButtonType exit = new ButtonType("Exit without Saving");

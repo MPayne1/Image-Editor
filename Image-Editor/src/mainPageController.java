@@ -1,3 +1,4 @@
+import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +22,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -40,7 +42,7 @@ public class mainPageController {
 	@FXML 
 	MenuItem closeFile;
 	@FXML 
-	MenuItem insertImageEdit;
+	MenuItem insertImageMenuItem;
 	@FXML 
 	Canvas canvasMain;
 	@FXML 
@@ -63,6 +65,8 @@ public class mainPageController {
 	ColorPicker colourPicker;
 	@FXML
 	Button eraserBtn;
+	@FXML
+	MenuItem openMenuItem;
 	@FXML private BorderPane bPane;
 	
 	
@@ -72,6 +76,7 @@ public class mainPageController {
 	private double toY;
 	private double strokeSize;
 	private WritableImage image;
+	
 	
 	public void initialize() {
 		
@@ -137,7 +142,14 @@ public class mainPageController {
 			});
 		});
 		
-		
+		// open menu item event handler
+		this.openMenuItem.setOnAction(open -> {
+			handleOpen();
+		});
+	
+		this.insertImageMenuItem.setOnAction(insert -> {
+			handleOpen();
+		});
 	}
 	
 	/**
@@ -197,5 +209,34 @@ public class mainPageController {
 		}
 	}
 	
+	/**
+	 * Open the file chooser and choose an image
+	 */
+	private void handleOpen() {
+		BufferedImage buffImg = null;
+		Image img = null;
+		FileChooser fileChooser = new FileChooser();
+		Double imgHeight  = this.canvasMain.getHeight();
+		Double imgWidth = this.canvasMain.getWidth();
+		
+
+		FileChooser.ExtensionFilter justJPG = new FileChooser.ExtensionFilter("JPG files (*.JPG)", "*.JPG", "*.jpg");
+		FileChooser.ExtensionFilter justPNG = new FileChooser.ExtensionFilter("PNG files (*.PNG)", "*.PNG", "*.png");
+		fileChooser.getExtensionFilters().addAll(justJPG, justPNG);
+
+		File file = fileChooser.showOpenDialog(null);
+
+		try {
+			 buffImg = ImageIO.read(file);
+			 buffImg.getScaledInstance(imgHeight.intValue(), imgWidth.intValue(), 0);
+			img = SwingFXUtils.toFXImage(buffImg, null);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		//return ("file:///" + file.getAbsolutePath());
+		
+		
+		this.canvasMain.getGraphicsContext2D().drawImage(img, 0, 0);
+	}
 	
 }
