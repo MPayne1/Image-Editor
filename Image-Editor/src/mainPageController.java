@@ -211,6 +211,7 @@ public class mainPageController {
 	
 	/**
 	 * Open the file chooser and choose an image
+	 * Scales the image to fit on the canvas, keeping the aspect ratio
 	 */
 	private void handleOpen() {
 		BufferedImage buffImg = null;
@@ -220,7 +221,9 @@ public class mainPageController {
 		Double imgWidthD = this.canvasMain.getWidth();
 		int imgHeight = imgHeightD.intValue();
 		int imgWidth = imgWidthD.intValue();
-
+		int newWidth;
+		int newHeight;
+		
 		FileChooser.ExtensionFilter justJPG = new FileChooser.ExtensionFilter("JPG files (*.JPG)", "*.JPG", "*.jpg");
 		FileChooser.ExtensionFilter justPNG = new FileChooser.ExtensionFilter("PNG files (*.PNG)", "*.PNG", "*.png");
 		fileChooser.getExtensionFilters().addAll(justJPG, justPNG);
@@ -231,12 +234,22 @@ public class mainPageController {
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
+		newWidth = buffImg.getWidth();
+		newHeight = buffImg.getHeight();
+		
 		// Scale the image to canvas size.
-		java.awt.Image scaledImg  = buffImg.getScaledInstance(imgWidth, imgHeight, 0);
+		if (buffImg.getWidth() > imgWidth) {
+			newWidth  = imgWidth;
+			newHeight = (newWidth * buffImg.getHeight()) / buffImg.getWidth();
+		}
+		if(newHeight > imgHeight) {
+			newHeight = imgHeight;
+			newWidth = (newHeight * buffImg.getWidth()) / buffImg.getWidth();
+		}
+		java.awt.Image scaledImg  = buffImg.getScaledInstance(newWidth, newHeight, 0);
 		BufferedImage buffScaleImg = new BufferedImage(imgWidth, imgHeight, 2 ); // 2 is image type TYPE_INT_ARGB
 		buffScaleImg.getGraphics().drawImage(scaledImg, 0, 0, null);
-		img = SwingFXUtils.toFXImage(buffScaleImg, null);
-			
+		img = SwingFXUtils.toFXImage(buffScaleImg, null);	
 		this.canvasMain.getGraphicsContext2D().drawImage(img, 0, 0);
 	}
 	
