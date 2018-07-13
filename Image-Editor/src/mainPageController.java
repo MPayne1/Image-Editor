@@ -28,6 +28,8 @@ import javafx.stage.FileChooser;
  *
  */
 public class mainPageController {
+	@FXML
+	BorderPane borderPane;
 	@FXML 
 	MenuItem closeFile;
 	@FXML 
@@ -145,7 +147,7 @@ public class mainPageController {
 	 * Draw a straight line
 	 */
 	private void handleStraightLineBtn(MouseEvent to) {
-		GraphicsContext gc = canvasMain.getGraphicsContext2D();
+		GraphicsContext gc = this.canvasMain.getGraphicsContext2D();
 		gc.setStroke(colourPicker.getValue());
 		gc.setLineWidth(this.strokeSize);
 		this.toX = to.getX();
