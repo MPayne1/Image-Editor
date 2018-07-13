@@ -17,7 +17,7 @@ import javafx.stage.WindowEvent;
 /**
  * 
  * @author Matthew Payne
- *
+ * Launches program, handles closing
  */
 public class Main extends Application {
 	@Override
@@ -36,7 +36,6 @@ public class Main extends Application {
 			public void handle(WindowEvent event) {
 				handleWindowClose(event);
 		    }
-		
 		});
 		
 	}

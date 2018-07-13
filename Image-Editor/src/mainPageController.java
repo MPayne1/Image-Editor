@@ -21,11 +21,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
+import javafx.stage.Window;
 
 /**
  * 
  * @author Matthew Payne
- *
+ * Controls the main page, drawing inserting, saving 
  */
 public class mainPageController {
 	@FXML
@@ -67,7 +68,13 @@ public class mainPageController {
 	private double toY;
 	private double strokeSize;
 	private WritableImage image;
-	
+	private File justVisitedDir = null;
+	private FileChooser.ExtensionFilter allImages 
+		= new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png");
+	private FileChooser.ExtensionFilter justJPG 
+		= new FileChooser.ExtensionFilter("JPG files (*.JPG)", "*.JPG", "*.jpg");
+	private FileChooser.ExtensionFilter justPNG 
+		= new FileChooser.ExtensionFilter("PNG files (*.PNG)", "*.PNG", "*.png");
 	
 	public void initialize() {
 		
@@ -141,6 +148,7 @@ public class mainPageController {
 		this.insertImageMenuItem.setOnAction(insert -> {
 			handleOpen();
 		});
+
 	}
 	
 	/**
@@ -189,14 +197,15 @@ public class mainPageController {
 		FileChooser fileChooser = new FileChooser();
 
 		// Save to a file and set the image path.
-		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("png files (*.png)", "*.png");
-		fileChooser.getExtensionFilters().add(extFilter);
-
+		fileChooser.getExtensionFilters().addAll(this.allImages, this.justJPG, this.justPNG);
+		fileChooser.setInitialFileName("Drawing1");
+		
 		File file = fileChooser.showSaveDialog(null);
-
+			
 		if (file != null) {
+			String fileType = fileChooser.getSelectedExtensionFilter().toString();
 			RenderedImage renderedImage = SwingFXUtils.fromFXImage(this.image, null);
-			ImageIO.write(renderedImage, "png", file);
+			ImageIO.write(renderedImage, fileType, file);
 		}
 	}
 	
@@ -207,7 +216,7 @@ public class mainPageController {
 	private void handleOpen() {
 		BufferedImage buffImg = null;
 		Image img = null;
-		FileChooser fileChooser = new FileChooser();
+		
 		Double imgHeightD  = this.canvasMain.getHeight();
 		Double imgWidthD = this.canvasMain.getWidth();
 		int imgHeight = imgHeightD.intValue();
@@ -215,13 +224,8 @@ public class mainPageController {
 		int newWidth;
 		int newHeight;
 		
-		FileChooser.ExtensionFilter justJPG = new FileChooser.ExtensionFilter("JPG files (*.JPG)", "*.JPG", "*.jpg");
-		FileChooser.ExtensionFilter justPNG = new FileChooser.ExtensionFilter("PNG files (*.PNG)", "*.PNG", "*.png");
-		fileChooser.getExtensionFilters().addAll(justJPG, justPNG);
-
-		File file = fileChooser.showOpenDialog(null);
 		try {
-			 buffImg = ImageIO.read(file);
+			 buffImg = ImageIO.read(chooseFile());
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
@@ -244,4 +248,25 @@ public class mainPageController {
 		this.canvasMain.getGraphicsContext2D().drawImage(img, 0, 0);
 	}
 	
+	/**
+	 * Opens file chooser and returns chosen file
+	 * @return file
+	 */
+	private File chooseFile() {
+		FileChooser fileChooser = new FileChooser();
+		
+		if(this.justVisitedDir != null) {
+			fileChooser.setInitialDirectory(this.justVisitedDir);
+		}
+		
+		fileChooser.getExtensionFilters().addAll(this.allImages, this.justJPG, this.justPNG);
+		fileChooser.setTitle("Insert Image");
+		File file = fileChooser.showOpenDialog(null);
+		
+		if(file != null) {
+			this.justVisitedDir = file.getParentFile();
+		}
+		return file;
+		
+	}
 }
