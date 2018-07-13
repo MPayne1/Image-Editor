@@ -57,7 +57,8 @@ public class Main extends Application {
 	    	
 	    	ButtonType cancel = new ButtonType("Cancel");
 	    	ButtonType exit = new ButtonType("Exit without Saving");
-	    	alert.getButtonTypes().setAll(exit,cancel);
+	    	ButtonType saveExit = new ButtonType("Save and Exit");
+	    	alert.getButtonTypes().setAll(saveExit, exit, cancel);
 	    	Optional<ButtonType> result = alert.showAndWait();
 	    	if (result.get() == cancel){
 	    	    event.consume(); 
